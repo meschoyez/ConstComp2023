@@ -23,8 +23,9 @@ public class Escucha extends compiladoresBaseListener {
 
     @Override
     public void exitAsignacion(AsignacionContext ctx) {
-        System.out.println(" ++ Asignacion (in) Hijos = " + ctx.getChildCount()
+        System.out.println(" ++ Asignacion (out) Hijos = " + ctx.getChildCount()
                           + ": "+ ctx.getText() );
+        System.out.println(ctx.getChild(0).getText());
     }
 
     @Override
