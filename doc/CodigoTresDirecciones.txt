@@ -1,0 +1,94 @@
+Código Tres Direcciones (TAC - Three Address Code)
+
+x = y op z
+
+x = y op CTE
+x = y
+x = CTE
+jmp l
+label l
+ifnjmp x jmp l
+push x
+pop x
+
+Ej: ADD AX, BX, CX
+
+Traducción:
+ - generador de variables
+ - generador de etiquetas
+
+ z = 2 * (x + 3 * y);
+
+t0 = 3 * y
+t1 = x + t0
+t2 = 2 * t1
+z = t2
+----
+
+if (x > 0)
+    y = z + 5;
+else
+    y = z - 5;
+
+t0 = x > 0
+ifnjmp t0 jmp l0
+    y = z + 5
+    jmp l1
+label l0
+    y = z - 5
+label l1
+
+-----
+x = 0;
+while (x < 10){
+    y = z + 5;
+    x = x + 1;
+}
+
+x = 0
+label l0
+t0 = x < 10
+ifnjmp t0 jmp l1
+    y = z + 5
+    x = x + 1
+    jmp l0
+label l1
+
+----
+for (x = 0; x < 10; x = x + 1)
+    y = z + 5
+
+x = 0
+label l0
+t0 = x < 10
+ifnjmp t0 jmp l1
+    y = z + 5
+    x = x + 1
+    jmp l0
+label l1
+
+-----
+int f (int x) {
+    int y = x * x;
+    return y;
+}
+...
+x = 5;
+z = f(x);
+
+
+label l0
+pop t0
+pop x
+t1 = x * x
+y = t1
+push y
+jmp t0
+
+...
+x = 5
+push x
+push l1
+jmp l0
+label l1
+pop z

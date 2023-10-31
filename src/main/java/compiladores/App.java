@@ -32,12 +32,12 @@ public class App {
         // parser.programa();
         ParseTree tree = parser.programa();
         // Conectamos el visitor
-        // Caminante visitor = new Caminante();
-        // visitor.visit(tree);
+        MiCaminante visitor = new MiCaminante();
+        visitor.visit(tree);
         // System.out.println(visitor);
         // System.out.println(visitor.getErrorNodes());
         // Imprime el arbol obtenido
-        System.out.println(tree.toStringTree(parser));
+        // System.out.println(tree.toStringTree(parser));
         // System.out.println(escucha);
         
     }
