@@ -92,3 +92,213 @@ push l1
 jmp l0
 label l1
 pop z
+
+---------------
+x1 = b + ( b * b - 4 * a * c ) / 2 / a ;
+x2 = b - ( b * b - 4 * a * c ) / 2 / a ;
+
+t0 = b
+t1 = b
+t2 = t1 * b
+t3 = 4
+t4 = t3 * a
+t5 = t4 * c
+t6 = t2 - t5
+t7 = t6 / 2
+t8 = t7 / a
+t9 = t0 + t8
+x1 = t9
+
+t10 = b
+t11 = b
+t12 = t11 * b
+t13 = 4
+t14 = t13 * a
+t15 = t14 * c
+t16 = t12 - t15
+t17 = t16 / 2
+t18 = t17 / a
+t19 = t10 - t18
+x2 = t19
+
+---
+1er pasada optimización
+
+t0 = b
+t2 = t0 * b
+t3 = 4
+t4 = t3 * a
+t5 = t4 * c
+t6 = t2 - t5
+t7 = t6 / 2
+t8 = t7 / a
+t9 = t0 + t8
+x1 = t9
+
+t12 = t0 * b
+t14 = t3 * a
+t15 = t14 * c
+t16 = t12 - t15
+t17 = t16 / 2
+t18 = t17 / a
+t19 = t0 - t18
+x2 = t19
+
+---
+2da pasada optimización
+
+t0 = b
+t2 = t0 * b
+t3 = 4
+t4 = t3 * a
+t5 = t4 * c
+t6 = t2 - t5
+t7 = t6 / 2
+t8 = t7 / a
+t9 = t0 + t8
+x1 = t9
+
+t15 = t4 * c
+t16 = t2 - t15
+t17 = t16 / 2
+t18 = t17 / a
+t19 = t0 - t18
+x2 = t19
+
+---
+3ra pasada optimización
+
+t0 = b
+t2 = t0 * b
+t3 = 4
+t4 = t3 * a
+t5 = t4 * c
+t6 = t2 - t5
+t7 = t6 / 2
+t8 = t7 / a
+t9 = t0 + t8
+x1 = t9
+
+t16 = t2 - t5
+t17 = t16 / 2
+t18 = t17 / a
+t19 = t0 - t18
+x2 = t19
+
+---
+4ta pasada optimización
+
+t0 = b
+t2 = t0 * b
+t3 = 4
+t4 = t3 * a
+t5 = t4 * c
+t6 = t2 - t5
+t7 = t6 / 2
+t8 = t7 / a
+t9 = t0 + t8
+x1 = t9
+
+t17 = t6 / 2
+t18 = t17 / a
+t19 = t0 - t18
+x2 = t19
+
+---
+5ta pasada optimización
+
+t0 = b
+t2 = t0 * b
+t3 = 4
+t4 = t3 * a
+t5 = t4 * c
+t6 = t2 - t5
+t7 = t6 / 2
+t8 = t7 / a
+t9 = t0 + t8
+x1 = t9
+
+t18 = t7 / a
+t19 = t0 - t18
+x2 = t19
+
+---
+6ta pasada optimización
+
+t0 = b
+t2 = t0 * b
+t3 = 4
+t4 = t3 * a
+t5 = t4 * c
+t6 = t2 - t5
+t7 = t6 / 2
+t8 = t7 / a
+t9 = t0 + t8
+x1 = t9
+
+t19 = t0 - t8
+x2 = t19
+
+---
+7ma pasada optimización
+
+t2 = b * b
+t4 = 4 * a
+t5 = t4 * c
+t6 = t2 - t5
+t7 = t6 / 2
+t8 = t7 / a
+x1 = b + t8
+
+x2 = b - t8
+
+------------
+Propagación de constantes
+
+x = 4;
+y = x / 2;
+z = 2 * x + 5 * y;
+
+x = 4
+y = x / 2
+t0 = 2 * x
+t1 = 5 * y
+t2 = t0 + t1
+z = t2
+
+-----------
+1ra pasada
+
+x = 4
+y = 4 / 2
+t0 = 2 * 4
+t1 = 5 * y
+t2 = t0 + t1
+z = t2
+
+-----------
+2da pasada
+
+y = 2
+t0 = 8
+t1 = 5 * 2
+t2 = t0 + t1
+z = t2
+
+-----------
+3ra pasada
+
+t1 = 10
+t2 = 8 + t1
+z = t2
+
+-----------
+4ta pasada
+
+z = 8 + 10
+
+-----------
+5ta pasada
+
+z = 18
+
